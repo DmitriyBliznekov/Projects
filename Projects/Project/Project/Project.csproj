@@ -70,6 +70,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\DeleteMessage.cs" />
+    <Compile Include="Helpers\MessageListener.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="View\MainWindow.xaml">
@@ -114,7 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
