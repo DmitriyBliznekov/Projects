@@ -115,7 +115,7 @@ namespace Project.ViewModel
             }
             catch (Exception e)
             {
-                Trace.TraceWarning("Cannon read from file"); //todo mbox with e.Message
+                MessengerInstance.Send(e);
             }
         }
 
@@ -202,14 +202,9 @@ namespace Project.ViewModel
                     namesOfSelectedStudents += item.FullName;
             }
 
+            //Merge message items that can be deleted
             var msg = new DeleteMessage(this, namesOfSelectedStudents, (result) =>
             {
-                //if (result == MessageBoxResult.OK)
-                //    foreach (var item in collection.ToList())
-                //        CollectionOfStudent.Remove(item);
-
-                //ClearCommand.RaiseCanExecuteChanged();
-                //todo NAMES!!!!!!!!!!
                 var test = collection.ToList();
                 if (result == MessageBoxResult.OK)
                     test.ForEach(
@@ -225,9 +220,6 @@ namespace Project.ViewModel
             });
 
             MessengerInstance.Send(msg);
-            //Messenger.Default.Send(msg);
-
-            //Console.WriteLine(SelectedStudent);
         }
 
         private void OnLoad()

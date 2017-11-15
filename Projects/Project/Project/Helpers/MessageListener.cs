@@ -1,5 +1,7 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using System;
+using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
+using Project.ViewModel;
 
 namespace Project.Helpers
 {
@@ -39,10 +41,18 @@ namespace Project.Helpers
             //        window.ShowDialog();
             //    });
 
+            //Announcement of delete element(s)
             Messenger.Default.Register<DeleteMessage>(this, (msg) =>
             {
                 var result = MessageBox.Show($"Вы действительно хотите удалить {msg.Notification} из списка?", "Удаление", MessageBoxButton.OKCancel);
                 msg.Execute(result);
+            });
+
+            //Announcement of errors about unsuccessful Xml load
+            Messenger.Default.Register<Exception>(this, (msg) =>
+            {
+                MessageBox.Show("Во время загрузки файла возникла ошибка: \n" + msg.Message, "Неудачная загрузка",
+                    MessageBoxButton.OK);
             });
         }
 
