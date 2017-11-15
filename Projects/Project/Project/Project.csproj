@@ -74,6 +74,7 @@
     <Compile Include="Converters\AgeConverter.cs" />
     <Compile Include="Converters\GenderConverter.cs" />
     <Compile Include="Converters\HiddenElementConverter.cs" />
+    <Compile Include="Converters\NoElementInCollectionConverter.cs" />
     <Compile Include="Helpers\DeleteMessage.cs" />
     <Compile Include="Helpers\MessageListener.cs" />
     <Compile Include="Helpers\XmlSerialization.cs" />
