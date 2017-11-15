@@ -74,6 +74,20 @@ namespace Project.ViewModel
                 RaisePropertyChanged(nameof(SelectedStudent));
             }
         }
+
+        public StudentModel StudentModel
+        {
+            get => StudentsView.CurrentItem as StudentModel;
+            set
+            {
+                StudentsView.MoveCurrentTo(value);
+                RaisePropertyChanged(nameof(StudentModel));
+
+                StudentModel.OkCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public ListCollectionView StudentsView { get; }
         #endregion
 
         #region Methods
@@ -97,32 +111,37 @@ namespace Project.ViewModel
                     });
                 }
 
-                foreach (var item in CollectionOfStudent)
-                {
-                    item.PropertyChanged += StudentsOnPropertyChanged;
-                }
-                CollectionOfStudent.CollectionChanged += (s, e) =>
-                {
-                    if (e.NewItems != null)
-                    {
-                        foreach (INotifyPropertyChanged added in e.NewItems)
-                        {
-                            added.PropertyChanged += StudentsOnPropertyChanged;
-                        }
-                    }
-                    if (e.OldItems != null)
-                    {
-                        foreach (INotifyPropertyChanged removed in e.OldItems)
-                        {
-                            removed.PropertyChanged -= StudentsOnPropertyChanged;
-                        }
-                    }
-                };
+                SubscribeAllCollectionFromFile();
             }
             catch (Exception e)
             {
                 Trace.TraceWarning("Cannon read from file"); //todo mbox with e.Message
             }
+        }
+
+        private void SubscribeAllCollectionFromFile()
+        {
+            foreach (var item in CollectionOfStudent)
+            {
+                item.PropertyChanged += StudentsOnPropertyChanged;
+            }
+            CollectionOfStudent.CollectionChanged += (s, e) =>
+            {
+                if (e.NewItems != null)
+                {
+                    foreach (INotifyPropertyChanged added in e.NewItems)
+                    {
+                        added.PropertyChanged += StudentsOnPropertyChanged;
+                    }
+                }
+                if (e.OldItems != null)
+                {
+                    foreach (INotifyPropertyChanged removed in e.OldItems)
+                    {
+                        removed.PropertyChanged -= StudentsOnPropertyChanged;
+                    }
+                }
+            };
         }
 
         private void OnAdd()
@@ -159,10 +178,6 @@ namespace Project.ViewModel
                 Gender = "0",
                 LastName = "Иванов"
             };
-
-
-            //Students.Add(newStudent);
-            //StudentModel = newStudent;
 
             CollectionOfStudent.Add(newStudent);
             StudentModel = newStudent;
@@ -202,13 +217,15 @@ namespace Project.ViewModel
                         {
                             CollectionOfStudent.Remove(prop);
                         });
+
                 foreach (var item in collection.ToList())
                     CollectionOfStudent.Remove(item);
 
                 ClearCommand.RaiseCanExecuteChanged();
             });
 
-            Messenger.Default.Send(msg);
+            MessengerInstance.Send(msg);
+            //Messenger.Default.Send(msg);
 
             //Console.WriteLine(SelectedStudent);
         }
@@ -259,24 +276,10 @@ namespace Project.ViewModel
             Messenger.Default.Send(msg);
         }
 
-        public StudentModel StudentModel
-        {
-            get => StudentsView.CurrentItem as StudentModel;
-            set
-            {
-                StudentsView.MoveCurrentTo(value);
-                RaisePropertyChanged(nameof(StudentModel));
-
-                StudentModel.OkCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        public ListCollectionView StudentsView { get; }
-
         /// <summary>
         /// Event handler for property changes on elements of <see cref="Persons"/>.
         /// </summary>
-        /// <param name="sender">The person model.</param>
+        /// <param name="sender">The student model.</param>
         /// <param name="e">The event arguments.</param>
         private void StudentsOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
