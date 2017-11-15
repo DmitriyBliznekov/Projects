@@ -73,6 +73,7 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\DeleteMessage.cs" />
     <Compile Include="Helpers\MessageListener.cs" />
+    <Compile Include="Helpers\XmlSerialization.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\StudentModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
