@@ -74,6 +74,7 @@
     <Compile Include="Helpers\DeleteMessage.cs" />
     <Compile Include="Helpers\MessageListener.cs" />
     <Compile Include="Model\BaseModel.cs" />
+    <Compile Include="Model\StudentModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="View\MainWindow.xaml">
