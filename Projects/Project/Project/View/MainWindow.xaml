@@ -53,7 +53,113 @@
     </Window.Resources>
     
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="LightSlateGray">
+            <Border VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Foreground="Indigo" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="2" ScaleX="1"/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>
+                        <Run Text="В коллекции нет ни одного элемента" />
+                        <LineBreak />
+                        <Run Text="Загрузите готовую коллекцию или создайте свою" />
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <ListView Grid.Row="0"
+                  IsSynchronizedWithCurrentItem="True"
+                  ItemsSource="{Binding StudentsView}"
+                  AlternationCount="2" HorizontalAlignment="Stretch" Background="LightGray" 
+                  SelectedIndex="{Binding SelectedIndex}"
+                  SelectedItem="{Binding SelectedStudent, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Visibility="{Binding StudentsView.Count, Converter={StaticResource VisibilityConverter}}"
+                  Name="ListView">
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Полное имя" Width="150" DisplayMemberBinding="{Binding FullName}"></GridViewColumn>
+                    <GridViewColumn Header="Возраст"  Width="60"  DisplayMemberBinding="{Binding Age, Converter={StaticResource AgeConverter}}"></GridViewColumn>
+                    <GridViewColumn Header="Пол" Width="70" DisplayMemberBinding="{Binding Gender, Converter={StaticResource GenderConverter}}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="Padding" Value="2"></Setter>
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                            <Setter Property="Background" Value="Aqua" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                            <Setter Property="Background" Value="DarkOrange" />
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="LimeGreen"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <StackPanel  Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="1,2,1,2">
+            <Button Content="Добавить" Margin="1" MinWidth="40" Command="{Binding AddCommand, Mode=OneWay}" />
+            <Button Content="Удалить" Margin="1" MinWidth="40" Command="{Binding DeleteCommand, Mode=OneWay}"
+                    CommandParameter="{Binding SelectedItems, ElementName=ListView}"></Button>
+            <Button Content="Загрузить" Margin="1" MinWidth="40" Command="{Binding LoadCommand, Mode=OneWay}" />
+            <Button Content="Сохранить" Margin="1" MinWidth="40" Command="{Binding SaveCommand, Mode=OneWay}" />
+            <Button Content="Очистить" Margin="1" MinWidth="40" Command="{Binding ClearCommand, Mode=OneWay}" />
+            <Button Content="Чек" Margin="1" MinWidth="40" Command="{Binding StudentModel.OkCommand, Mode=OneWay}"  />
+        </StackPanel>
+
+        <Border Grid.Row="2">
+            <Grid>
+                <!--<Grid Visibility="{Binding CollectionOfStudent.Count, Converter={StaticResource VisibilityConverter}}">-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0" 
+                            Opacity="{Binding SelectedStudent, Converter={StaticResource OpacityConverter}}" 
+                            Style="{Binding Mode=OneWay, Source={StaticResource ValidationsOfFields}}">
+                    <TextBlock Text="Имя" />
+                    <TextBlock Text="Фамилия" />
+                    <TextBlock Text="Возраст" />
+                    <TextBlock Text="Пол" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="1" DataContext="{Binding SelectedStudent}"
+                            IsEnabled="{Binding Converter={StaticResource HiddenElementConverter}, Mode=OneWay}"
+                            Style="{Binding Mode=OneWay, Source={StaticResource ValidationsOfFields}}">
+                    <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                    <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                    <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                    <ComboBox SelectedIndex="{Binding Gender, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem>Мужской</ComboBoxItem>
+                        <ComboBoxItem>Женский</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
 
