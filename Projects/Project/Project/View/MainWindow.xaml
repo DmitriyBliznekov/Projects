@@ -4,9 +4,56 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project"
+        xmlns:converters="clr-namespace:Project.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Список студентов"
+        MinWidth="300" MinHeight="300"
+        Height="300" MaxWidth="600" 
+        SizeToContent="Width"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Resources/Icon DB.png"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <Window.Resources>
+        <converters:AgeConverter x:Key="AgeConverter" />
+        <converters:GenderConverter x:Key="GenderConverter" />
+        <converters:NoElementInCollectionConverter x:Key="VisibilityConverter" />
+        <converters:OpacityConverter x:Key="OpacityConverter" />
+        <converters:HiddenElementConverter x:Key="HiddenElementConverter" />
+
+        <ControlTemplate x:Key="ErrorTemplate">
+            <DockPanel LastChildFill="True">
+                <Border DockPanel.Dock="Top" BorderBrush="Red" BorderThickness="4">
+                    <AdornedElementPlaceholder />
+                </Border>
+            </DockPanel>
+        </ControlTemplate>
+
+        <Style x:Key="ValidationsOfFields" TargetType="StackPanel">
+            <Style.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="4"></Setter>
+                    <Setter Property="Validation.ErrorTemplate" Value="{StaticResource ErrorTemplate}"></Setter>
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+
+                <Style TargetType="ComboBox">
+                    <Setter Property="Margin" Value="4"></Setter>
+                </Style>
+
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="5"></Setter>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         
     </Grid>
 </Window>
+
