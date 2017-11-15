@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\AgeConverter.cs" />
     <Compile Include="Helpers\DeleteMessage.cs" />
     <Compile Include="Helpers\MessageListener.cs" />
     <Compile Include="Helpers\XmlSerialization.cs" />
@@ -118,9 +119,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Resources\Icon DB.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
