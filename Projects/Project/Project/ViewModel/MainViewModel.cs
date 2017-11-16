@@ -36,7 +36,7 @@ namespace Project.ViewModel
 
             StudentsView.CurrentChanged += (s, e) =>
             {
-                RaisePropertyChanged(() => StudentModel);
+                RaisePropertyChanged(nameof(StudentModel));
             };
         }
 
@@ -239,7 +239,7 @@ namespace Project.ViewModel
             }
         }
 
-        private void OnSave() // todo method SaveXml
+        private void OnSave()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
@@ -269,7 +269,7 @@ namespace Project.ViewModel
         }
 
         /// <summary>
-        /// Event handler for property changes on elements of <see cref="Persons"/>.
+        /// Event handler for property changes on elements of <see cref="Students"/>.
         /// </summary>
         /// <param name="sender">The student model.</param>
         /// <param name="e">The event arguments.</param>

@@ -46,7 +46,7 @@ namespace Project.Model
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле Возраст обязательно дня заполнения")]
         [RegularExpression("[0-9]+", ErrorMessage = "Неверный формат ввода")]
-        [Range(16, 100, ErrorMessage = "Возраст должен быть в диапазоне [16, 100]")]
+        [Range(16, 100, ErrorMessage = "Возраст должен быть в интервале [16, 100]")]
         public string Age
         {
             get => age;
