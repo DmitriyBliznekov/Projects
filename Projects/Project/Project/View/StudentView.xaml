@@ -17,7 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -48,11 +48,16 @@
                          Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}" 
                          Text="{Binding Student.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></TextBox>
                 <TextBox Grid.Row="1" Grid.Column="1"
-                         Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}"></TextBox>
+                         Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}"
+                         Text ="{Binding Student.LastName}"></TextBox>
                 <TextBox Grid.Row="2" Grid.Column="1"
-                         Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}"></TextBox>
+                         Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}"
+                         Text ="{Binding Student.Age}"></TextBox>
                 <ComboBox Grid.Row="3" Grid.Column="1"
-                          SelectedIndex="{Binding Student.Gender, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+                          SelectedIndex="{Binding Student.Gender, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>Мужской</ComboBoxItem>
+                    <ComboBoxItem>Женский</ComboBoxItem>
+                </ComboBox>
             </Grid>
         </Border>
         <StackPanel Grid.Row="1">

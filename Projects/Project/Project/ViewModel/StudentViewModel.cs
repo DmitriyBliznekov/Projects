@@ -10,11 +10,6 @@ namespace Project.ViewModel
 {
     public class StudentViewModel : ViewModelBase
     {
-        //public StudentViewModel(StudentModel studentModel)
-        //{
-        //    Student = studentModel;
-        //}
-
         private StudentModel student;
         public StudentModel Student
         {
@@ -26,7 +21,5 @@ namespace Project.ViewModel
                 Console.WriteLine(Student.FirstName);
             }
         }
-
-        //public StudentModel Student { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Project.ViewModel
             LoadCommand = new RelayCommand(OnLoad, () => true);
             SaveCommand = new RelayCommand(OnSave, () => true);
             ClearCommand = new RelayCommand(OnClear, () => CollectionOfStudent.Any());
-
+            EditCommand = new RelayCommand(OnEdit, () => SelectedStudent != null);
             StudentsView = CollectionViewSource.GetDefaultView(CollectionOfStudent) as ListCollectionView;
 
             StudentsView.CurrentChanged += (s, e) =>
@@ -53,6 +53,7 @@ namespace Project.ViewModel
         public RelayCommand LoadCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand ClearCommand { get; private set; }
+        public RelayCommand EditCommand { get; private set; }
 
         public int SelectedIndex
         {
@@ -71,6 +72,7 @@ namespace Project.ViewModel
             {
                 selectedStudent = value;
                 DeleteCommand.RaiseCanExecuteChanged(); // Activate Delete button after selecting an item
+                EditCommand.RaiseCanExecuteChanged(); // Activate Edit button after selecting an item
                 RaisePropertyChanged(nameof(SelectedStudent));
             }
         }
@@ -146,13 +148,7 @@ namespace Project.ViewModel
 
         private void OnAdd()
         {
-            //CollectionOfStudent.Add(newStudent);
-            //StudentModel = newStudent;
-
-            //ClearCommand.RaiseCanExecuteChanged(); // Activate Clear button
-
-            //MessengerInstance.Send(new StudentModel() {FirstName = "Ivan", Age = "22", Gender = "1", LastName = "Loh"});
-            MessengerInstance.Send(new OpenChildWindowAddOrEdit(new StudentModel() {FirstName = "Ivan", Age = "22", Gender = "1", LastName = "Loh"}));
+            MessengerInstance.Send(new OpenChildWindowAddOrEdit(new StudentModel()));
         }
 
         private void OnDelete(object students)
@@ -236,6 +232,11 @@ namespace Project.ViewModel
             });
 
             Messenger.Default.Send(msg);
+        }
+
+        private void OnEdit()
+        {
+            MessengerInstance.Send(new OpenChildWindowAddOrEdit(SelectedStudent));
         }
 
         /// <summary>
