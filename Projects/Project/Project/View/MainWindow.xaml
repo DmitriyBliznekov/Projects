@@ -7,7 +7,6 @@
         xmlns:converters="clr-namespace:Project.Converters"
         mc:Ignorable="d"
         Title="Список студентов"
-        MinWidth="300" MinHeight="300"
         Height="300" MaxWidth="600" 
         SizeToContent="Width"
         WindowStartupLocation="CenterScreen"
@@ -19,21 +18,28 @@
     </Window.IsEnabled>
 
     <Window.Resources>
-        <converters:AgeConverter x:Key="AgeConverter" />
-        <converters:GenderConverter x:Key="GenderConverter" />
-        <converters:NoElementInCollectionConverter x:Key="VisibilityConverter" />
-        <converters:OpacityConverter x:Key="OpacityConverter" />
-        <converters:HiddenElementConverter x:Key="HiddenElementConverter" />
-
-        <ControlTemplate x:Key="ErrorTemplate">
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Dictionary/Resources.xaml"></ResourceDictionary>
+                <ResourceDictionary>
+                    <converters:AgeConverter x:Key="AgeConverter" />
+                    <converters:GenderConverter x:Key="GenderConverter" />
+                    <converters:NoElementInCollectionConverter x:Key="VisibilityConverter" />
+                    <converters:OpacityConverter x:Key="OpacityConverter" />
+                    <converters:HiddenElementConverter x:Key="HiddenElementConverter" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+        <!--<ControlTemplate x:Key="ErrorTemplate">
             <DockPanel LastChildFill="True">
                 <Border DockPanel.Dock="Top" BorderBrush="Red" BorderThickness="4">
                     <AdornedElementPlaceholder />
                 </Border>
             </DockPanel>
-        </ControlTemplate>
+        </ControlTemplate>-->
 
-        <Style x:Key="ValidationsOfFields" TargetType="StackPanel">
+        <!--<Style x:Key="ValidationsOfFields" TargetType="StackPanel">
             <Style.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="Margin" Value="4"></Setter>
@@ -45,47 +51,8 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-
-                <Style TargetType="ComboBox">
-                    <Setter Property="Margin" Value="4"></Setter>
-                </Style>
-
-                <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="5"></Setter>
-                </Style>
             </Style.Resources>
-        </Style>
-
-        <Style x:Key="ButtonsStyle" TargetType="StackPanel">
-            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="Orientation" Value="Horizontal"></Setter>
-            <Setter Property="Margin" Value="1,2,1,2"></Setter>
-            <Style.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Width" Value="90"></Setter>
-                    <Setter Property="Height" Value="30"></Setter>
-                    <Style.Resources>
-                        <Style TargetType="StackPanel">
-                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                            <Setter Property="Orientation" Value="Horizontal"></Setter>
-                            <Style.Resources>
-                                <Style TargetType="Image">
-                                    <Setter Property="Width" Value="16"></Setter>
-                                    <Setter Property="Height" Value="16"></Setter>
-                                </Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="5,0,0,0"></Setter>
-                                    <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                    <Setter Property="TextWrapping" Value="NoWrap"></Setter>
-                                </Style>
-                            </Style.Resources>
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </Style.Resources>
-        </Style>
+        </Style>-->
     </Window.Resources>
 
     <Grid>
@@ -120,7 +87,7 @@
 
             <DataGrid x:Name="mainDataGrid"
                       Margin="5,5,5,0"
-                      AlternatingRowBackground="Red"
+                      AlternatingRowBackground="Aqua"
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"
                       CanUserReorderColumns="True"
@@ -128,7 +95,7 @@
                       CanUserResizeRows="True"
                       SelectionMode="Extended"
                       SelectionUnit="FullRow"
-                      SelectedIndex="0"
+                      SelectedIndex="{Binding SelectedIndex}"
                       AutoGenerateColumns="False"
                       SelectedItem="{Binding SelectedStudent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{Binding Path=CollectionOfStudent, Mode=OneWay}">
@@ -138,9 +105,9 @@
                                         Binding="{Binding FullName, Mode=OneWay}">
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Возраст"
-                                        Binding="{Binding Age, Mode=OneWay}"></DataGridTextColumn>
+                                        Binding="{Binding Age, Converter={StaticResource AgeConverter}, Mode=OneWay}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Пол"
-                                        Binding="{Binding Gender, Mode=OneWay}"></DataGridTextColumn>
+                                        Binding="{Binding Gender, Converter={StaticResource GenderConverter},Mode=OneWay}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
@@ -158,7 +125,7 @@
                     <TextBlock Text="Удалить" />
                 </StackPanel>
             </Button>
-            <Button Command="{Binding EditCommand}">
+            <Button Command="{Binding EditCommand}" Focusable="False">
                 <StackPanel>
                     <Image Source="/Images/Edit.png" />
                     <TextBlock Text="Изменить" />

@@ -66,8 +66,32 @@ namespace Project.Helpers
                     if (model != null)
                     {
                         model.Student = msg.Student;
+                        model.Index = msg.CurrentIndex;
                     }
                     window.ShowDialog();
+                });
+
+            Messenger.Default.Register<BackDataFromChildForm>(
+                this,
+                msg =>
+                {
+                    var window = new MainWindow();
+                    var model = window.DataContext as MainViewModel;
+                    if (model != null)
+                    {
+                        //model.CollectionOfStudent.Add(msg.Student);
+                        //if (model.CollectionOfStudent.Count == 0)
+                        //    model.CollectionOfStudent.Add(msg.Student);
+                        //else
+                        //    model.CollectionOfStudent[msg.Index] = msg.Student;
+
+                        if (model.CollectionOfStudent.Count == 0)
+                            model.CollectionOfStudent.Add(msg.Student);
+                        else if (msg.Index == 0)
+                            model.CollectionOfStudent.Add(msg.Student);
+                        else
+                            model.CollectionOfStudent[msg.Index] = msg.Student;
+                    }
                 });
         }
 

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Project.View"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="StudentView" Height="300" Width="300">
+        x:Name="StudentWindow"
+        Title="Изменение записи" SizeToContent="Height" Width="300">
     <Window.DataContext>
         <Binding Path="StudentVM" Source="{StaticResource Locator}" />
     </Window.DataContext>
@@ -60,8 +61,20 @@
                 </ComboBox>
             </Grid>
         </Border>
-        <StackPanel Grid.Row="1">
-            <Button></Button>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Style="{Binding Mode=OneWay, Source={StaticResource ButtonsStyle}}">
+            <Button Command="{Binding OkCommand}" CommandParameter="{Binding ElementName=StudentWindow}">
+                <StackPanel>
+                    <Image Source="/Images/Okay.png" />
+                    <TextBlock Text="Принять" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=StudentVindow}">
+                <StackPanel>
+                    <Image Source="/Images/Cancel.png" />
+                    <TextBlock Text="Отмена" />
+                </StackPanel>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

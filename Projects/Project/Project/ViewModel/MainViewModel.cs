@@ -6,6 +6,7 @@ using Project.Helpers;
 using Project.Model;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -73,6 +74,7 @@ namespace Project.ViewModel
                 selectedStudent = value;
                 DeleteCommand.RaiseCanExecuteChanged(); // Activate Delete button after selecting an item
                 EditCommand.RaiseCanExecuteChanged(); // Activate Edit button after selecting an item
+                ClearCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged(nameof(SelectedStudent));
             }
         }
@@ -148,7 +150,8 @@ namespace Project.ViewModel
 
         private void OnAdd()
         {
-            MessengerInstance.Send(new OpenChildWindowAddOrEdit(new StudentModel()));
+            MessengerInstance.Send(new OpenChildWindowAddOrEdit(this));
+            ClearCommand.RaiseCanExecuteChanged();
         }
 
         private void OnDelete(object students)
@@ -173,16 +176,18 @@ namespace Project.ViewModel
             {
                 var test = collection.ToList();
                 if (result == MessageBoxResult.OK)
+                {
                     test.ForEach(
                         prop =>
                         {
                             CollectionOfStudent.Remove(prop);
                         });
 
-                foreach (var item in collection.ToList())
-                    CollectionOfStudent.Remove(item);
+                    foreach (var item in collection.ToList())
+                        CollectionOfStudent.Remove(item);
 
-                ClearCommand.RaiseCanExecuteChanged();
+                    ClearCommand.RaiseCanExecuteChanged();
+                }       
             });
 
             MessengerInstance.Send(msg);
@@ -200,7 +205,6 @@ namespace Project.ViewModel
             {
                 CollectionOfStudent.Clear();
                 LoadXmlData(openFileDialog, openFileDialog.FileName);
-
                 ClearCommand.RaiseCanExecuteChanged(); // Activate Clear button
             }
         }
@@ -236,7 +240,7 @@ namespace Project.ViewModel
 
         private void OnEdit()
         {
-            MessengerInstance.Send(new OpenChildWindowAddOrEdit(SelectedStudent));
+            MessengerInstance.Send(new OpenChildWindowAddOrEdit(this));
         }
 
         /// <summary>
