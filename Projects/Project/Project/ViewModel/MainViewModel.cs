@@ -241,7 +241,8 @@ namespace Project.ViewModel
         private void OnEdit()
         {
             //true = new, false = edit
-            MessengerInstance.Send(new OpenChildWindowAddOrEdit(SelectedStudent, false, SelectedIndex));
+            MessengerInstance.Send(new OpenChildWindowAddOrEdit(SelectedStudent, false, SelectedIndex.ToString(), 
+                SelectedStudent.FirstName, SelectedStudent.LastName, SelectedStudent.Age, SelectedStudent.Gender));
         }
 
         /// <summary>

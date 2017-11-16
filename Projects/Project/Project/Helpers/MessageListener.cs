@@ -55,7 +55,6 @@ namespace Project.Helpers
                     {
                         model.Student = msg.Student;
                         model.NewStudent = msg.NewStudent;
-                        //model.Index = msg.CurrentIndex;
                     }
                     window.ShowDialog();
                 });
@@ -71,6 +70,13 @@ namespace Project.Helpers
                     {
                         model.Student = msg.Student;
                         model.NewStudent = msg.Edit;
+
+                        model.FirstNameSave = msg.FirstName;
+                        model.LastNameSave = msg.LastName;
+                        model.AgeSave = msg.Age;
+                        model.GenderSave = msg.Gender;
+
+                        model.SelectedIndex = msg.Index;
                     }
                     window.ShowDialog();
                 });
@@ -98,11 +104,13 @@ namespace Project.Helpers
                 this,
                 msg =>
                 {
-                    var window = new StudentView();
-                    var model = window.DataContext as StudentViewModel;
+                    var window = new MainWindow();
+                    var model = window.DataContext as MainViewModel;
                     if (model != null)
                     {
-                        Trace.WriteLine("Cancel");
+                        //Trace.WriteLine("Cancel");
+                        //model.CollectionOfStudent[msg.]
+                        model.CollectionOfStudent[int.Parse(msg.SelectedIndex)] = msg.Student;
                     }
                 });
         }
