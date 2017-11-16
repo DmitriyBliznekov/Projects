@@ -54,7 +54,7 @@ namespace Project.Helpers
                     if (model != null)
                     {
                         model.Student = msg.Student;
-                        model.NewStudent = msg.NewStudent;
+                        model.NewOrEdit = msg.NewStudent;
                     }
                     window.ShowDialog();
                 });
@@ -69,7 +69,7 @@ namespace Project.Helpers
                     if (model != null)
                     {
                         model.Student = msg.Student;
-                        model.NewStudent = msg.Edit;
+                        model.NewOrEdit = msg.Edit;
 
                         model.FirstNameSave = msg.FirstName;
                         model.LastNameSave = msg.LastName;
@@ -110,7 +110,8 @@ namespace Project.Helpers
                     {
                         //Trace.WriteLine("Cancel");
                         //model.CollectionOfStudent[msg.]
-                        model.CollectionOfStudent[int.Parse(msg.SelectedIndex)] = msg.Student;
+                        if (!msg.NewOrEdit)
+                            model.CollectionOfStudent[int.Parse(msg.SelectedIndex)] = msg.Student;
                     }
                 });
         }

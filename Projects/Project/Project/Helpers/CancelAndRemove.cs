@@ -10,14 +10,17 @@ namespace Project.Helpers
 {
     public class CancelAndRemove 
     {
-        public CancelAndRemove(StudentModel student, string selectedIndex)
+        public CancelAndRemove(StudentModel student, string selectedIndex, bool newOrEdit)
         {
             Student = student;
             SelectedIndex = selectedIndex;
+            NewOrEdit = newOrEdit;
         }
 
         public StudentModel Student { get; set; }
 
         public string SelectedIndex { get; set; }
+
+        public bool NewOrEdit { get; set; }
     }
 }

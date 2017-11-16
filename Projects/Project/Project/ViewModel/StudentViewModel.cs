@@ -31,7 +31,7 @@ namespace Project.ViewModel
             }
         }
 
-        public bool NewStudent { get; set; }
+        public bool NewOrEdit { get; set; }
 
         public string SelectedIndex { get; set; }
 
@@ -48,7 +48,7 @@ namespace Project.ViewModel
         {
             if (window != null)
             {
-                MessengerInstance.Send(new BackDataFromChildForm(Student, NewStudent));
+                MessengerInstance.Send(new BackDataFromChildForm(Student, NewOrEdit));
                 window.Close();
             }
         }
@@ -65,7 +65,7 @@ namespace Project.ViewModel
                 MessengerInstance.Send(
                     new CancelAndRemove(new StudentModel()
                     { FirstName = FirstNameSave, LastName = LastNameSave, Age = AgeSave, Gender = GenderSave },
-                    SelectedIndex));
+                    SelectedIndex, NewOrEdit));
                 window.Close();
             }
         }
