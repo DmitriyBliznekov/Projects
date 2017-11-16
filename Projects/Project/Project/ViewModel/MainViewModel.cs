@@ -86,8 +86,6 @@ namespace Project.ViewModel
             {
                 StudentsView.MoveCurrentTo(value);
                 RaisePropertyChanged(nameof(StudentModel));
-
-                StudentModel.OkCommand.RaiseCanExecuteChanged();
             }
         }
 

@@ -66,32 +66,5 @@ namespace Project.Model
                 RaisePropertyChanged(nameof(Gender));
             }
         }
-
-        public RelayCommand OkCommand { get; private set; }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// Override this method in derived types to initialize command logic.
-        /// </summary>
-        protected override void InitCommands()
-        {
-            base.InitCommands();
-            OkCommand = new RelayCommand(
-                () =>
-                {
-                    Trace.WriteLine("OK");
-                },
-                () => IsOkay);
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// Can be overridden by derived types to react on the finisihing of error-collections.
-        /// </summary>
-        protected override void OnErrorsCollected()
-        {
-            base.OnErrorsCollected();
-            OkCommand.RaiseCanExecuteChanged();
-        }
     }
 }
