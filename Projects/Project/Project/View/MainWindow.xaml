@@ -148,7 +148,7 @@
         <StackPanel Grid.Row="1" Style="{Binding Mode=OneWay, Source={StaticResource ButtonsStyle}}">
             <Button Command="{Binding AddCommand}">
                 <StackPanel>
-                    <Image Source="/Images/Load.png" />
+                    <Image Source="/Images/New Student.png" />
                     <TextBlock Text="Добавить" />
                 </StackPanel>
             </Button>
