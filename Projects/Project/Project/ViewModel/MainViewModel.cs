@@ -15,6 +15,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Project.ViewModel
 {

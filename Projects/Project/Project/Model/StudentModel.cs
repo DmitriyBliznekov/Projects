@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 
 namespace Project.Model
 {
+    [XmlType("Student")]
     public class StudentModel : BaseModel
     {
         private string firstName;

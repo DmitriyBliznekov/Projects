@@ -11,7 +11,7 @@ namespace Project.Helpers
             var ns = new XmlSerializerNamespaces();
             ns.Add("", "");
 
-            var xs = new XmlSerializer(typeof(T));
+            var xs = new XmlSerializer(typeof(T), new XmlRootAttribute("Students"));
             using (var wr = new StreamWriter(filePath))
             {
                 xs.Serialize(wr, item, ns);
