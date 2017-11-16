@@ -45,15 +45,15 @@
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Возраст" Style="{Binding Mode=OneWay, Source={StaticResource TextBlocksStudentView}}"></TextBlock>
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Пол" Style="{Binding Mode=OneWay, Source={StaticResource TextBlocksStudentView}}"></TextBlock>
 
-                <TextBox Grid.Row="0" Grid.Column="1" 
+                <TextBox Grid.Row="0" Grid.Column="1" Name="txtBoxFirstName"
                          Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}" 
                          Text="{Binding Student.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></TextBox>
-                <TextBox Grid.Row="1" Grid.Column="1"
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtBoxLastName"
                          Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}"
-                         Text ="{Binding Student.LastName}"></TextBox>
-                <TextBox Grid.Row="2" Grid.Column="1"
+                         Text ="{Binding Student.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></TextBox>
+                <TextBox Grid.Row="2" Grid.Column="1" Name="txtBoxAge"
                          Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}"
-                         Text ="{Binding Student.Age}"></TextBox>
+                         Text ="{Binding Student.Age, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></TextBox>
                 <ComboBox Grid.Row="3" Grid.Column="1"
                           SelectedIndex="{Binding Student.Gender, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem>Мужской</ComboBoxItem>
@@ -61,15 +61,30 @@
                 </ComboBox>
             </Grid>
         </Border>
-        
+
         <StackPanel Grid.Row="1" Orientation="Horizontal" Style="{Binding Mode=OneWay, Source={StaticResource ButtonsStyle}}">
-            <Button Command="{Binding OkCommand}" CommandParameter="{Binding ElementName=StudentWindow}">
-                <StackPanel>
-                    <Image Source="/Images/Okay.png" />
+            <Button Command="{Binding OkCommand}" CommandParameter="{Binding ElementName=StudentWindow}" Width="90" Height="30">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBoxFirstName}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBoxLastName}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBoxAge}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Images/Okay.png" Height="16" Width="16"/>
                     <TextBlock Text="Принять" />
                 </StackPanel>
             </Button>
-            <Button Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=StudentVindow}">
+            <Button Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=StudentWindow}">
                 <StackPanel>
                     <Image Source="/Images/Cancel.png" />
                     <TextBlock Text="Отмена" />

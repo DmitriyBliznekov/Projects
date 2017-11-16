@@ -83,9 +83,10 @@
                     Margin="0"
                     Background="Blue"
                     BorderBrush="LightGray"
-                    BorderThickness="1">
-
-            <DataGrid x:Name="mainDataGrid"
+                    BorderThickness="1"
+                    Visibility="{Binding CollectionOfStudent.Count, Converter={StaticResource VisibilityConverter}}">
+            
+            <DataGrid x:Name="mainDataGrid" 
                       Margin="5,5,5,0"
                       AlternatingRowBackground="Aqua"
                       CanUserAddRows="False"
@@ -125,7 +126,7 @@
                     <TextBlock Text="Удалить" />
                 </StackPanel>
             </Button>
-            <Button Command="{Binding EditCommand}" Focusable="False">
+            <Button Command="{Binding EditCommand}">
                 <StackPanel>
                     <Image Source="/Images/Edit.png" />
                     <TextBlock Text="Изменить" />

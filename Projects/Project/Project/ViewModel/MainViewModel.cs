@@ -150,7 +150,9 @@ namespace Project.ViewModel
 
         private void OnAdd()
         {
-            MessengerInstance.Send(new OpenChildWindowAddOrEdit(this));
+            //true = new, false = edit
+            MessengerInstance.Send(new OpenChildFormWithNewElement(new StudentModel(), true));
+
             ClearCommand.RaiseCanExecuteChanged();
         }
 
@@ -240,7 +242,8 @@ namespace Project.ViewModel
 
         private void OnEdit()
         {
-            MessengerInstance.Send(new OpenChildWindowAddOrEdit(this));
+            //true = new, false = edit
+            MessengerInstance.Send(new OpenChildWindowAddOrEdit(SelectedStudent, false, SelectedIndex));
         }
 
         /// <summary>

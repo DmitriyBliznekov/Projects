@@ -17,7 +17,7 @@ namespace Project.ViewModel
         public StudentViewModel()
         {
             OkCommand = new RelayCommand<Window>(OnOk, CanOk);
-            CloseWindowCommand = new RelayCommand<Window>(OnCloseWindow);
+            CloseWindowCommand = new RelayCommand<Window>(OnCloseWindow); //todo rollback changes
         }
 
         private StudentModel student;
@@ -31,15 +31,16 @@ namespace Project.ViewModel
             }
         }
 
+        public bool NewStudent { get; set; }
+
         private int index;
+
         public int Index
         {
-            get => index;
-            set
-            {
-                index = value;
-            }
+            get { return index; }
+            set { index = value; RaisePropertyChanged(nameof(Index)); }
         }
+
 
         public RelayCommand<Window> OkCommand { get; private set; }
         public RelayCommand<Window> CloseWindowCommand { get; private set; }
@@ -48,7 +49,7 @@ namespace Project.ViewModel
         {
             if (window != null)
             {
-                MessengerInstance.Send(new BackDataFromChildForm(this));
+                MessengerInstance.Send(new BackDataFromChildForm(Student, NewStudent, Index));
                 window.Close();
             }
         }
@@ -62,6 +63,7 @@ namespace Project.ViewModel
         {
             if (window != null)
             {
+                MessengerInstance.Send(new CancelAndRemove());
                 window.Close();
             }
         }

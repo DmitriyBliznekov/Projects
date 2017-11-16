@@ -11,13 +11,16 @@ namespace Project.Helpers
 {
     public class BackDataFromChildForm
     {
-        public BackDataFromChildForm(StudentViewModel student)
+        public BackDataFromChildForm(StudentModel student, bool newOrEdit, int index)
         {
-            Student = student.Student;
-            Index = student.Index;
+            Student = student;
+            NewOrEdit = newOrEdit;
+            Index = index;
         }
 
         public StudentModel Student { get; private set; }
+
+        public bool NewOrEdit { get; set; }
 
         public int Index { get; set; }
     }

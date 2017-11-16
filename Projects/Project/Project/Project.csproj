@@ -78,8 +78,10 @@
     <Compile Include="Converters\NoElementInCollectionConverter.cs" />
     <Compile Include="Converters\OpacityConverter.cs" />
     <Compile Include="Helpers\BackDataFromChildForm.cs" />
+    <Compile Include="Helpers\CancelAndRemove.cs" />
     <Compile Include="Helpers\DeleteMessage.cs" />
     <Compile Include="Helpers\MessageListener.cs" />
+    <Compile Include="Helpers\OpenChildFormWithNewElement.cs" />
     <Compile Include="Helpers\OpenChildWindowAddOrEdit.cs" />
     <Compile Include="Helpers\XmlSerialization.cs" />
     <Compile Include="Model\BaseModel.cs" />

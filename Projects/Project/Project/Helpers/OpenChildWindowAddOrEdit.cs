@@ -1,28 +1,20 @@
 ﻿using Project.Model;
-using Project.ViewModel;
 
 namespace Project.Helpers
 {
     public class OpenChildWindowAddOrEdit
     {
-        public OpenChildWindowAddOrEdit(MainViewModel student)
+        public OpenChildWindowAddOrEdit(StudentModel student, bool notEdit, int index)
         {
-            if (student.SelectedStudent == null)
-            {
-                CurrentIndex = 0;
-                Student = new StudentModel();
-            }
-
-            else
-            {
-                Student = student.SelectedStudent;
-                CurrentIndex = student.SelectedIndex;
-            }
-
+            Student = student;
+            Edit = notEdit;
+            Index = index;
         }
 
         public StudentModel Student { get; private set; }
 
-        public int CurrentIndex { get; set; }
+        public bool Edit { get; set; }
+
+        public int Index { get; set; }
     }
 }

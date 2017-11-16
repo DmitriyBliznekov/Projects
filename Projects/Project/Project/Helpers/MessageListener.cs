@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
 using Project.Model;
@@ -29,20 +30,6 @@ namespace Project.Helpers
         /// </summary>
         private void InitMessenger()
         {
-            // Hook to the message that states that some caller wants to open a ChildWindow.
-            //Messenger.Default.Register<OpenChildWindowMessage>(
-            //    this,
-            //    msg =>
-            //    {
-            //        var window = new ChildWindow();
-            //        var model = window.DataContext as ChildViewModel;
-            //        if (model != null)
-            //        {
-            //            model.MessageFromParent = msg.SomeText;
-            //        }
-            //        window.ShowDialog();
-            //    });
-
             //Announcement of delete element(s)
             Messenger.Default.Register<DeleteMessage>(this, (msg) =>
             {
@@ -57,6 +44,23 @@ namespace Project.Helpers
                     MessageBoxButton.OK);
             });
 
+            //if New clicked
+            Messenger.Default.Register<OpenChildFormWithNewElement>(
+                this,
+                msg =>
+                {
+                    var window = new StudentView();
+                    var model = window.DataContext as StudentViewModel;
+                    if (model != null)
+                    {
+                        model.Student = msg.Student;
+                        model.NewStudent = msg.NewStudent;
+                        //model.Index = msg.CurrentIndex;
+                    }
+                    window.ShowDialog();
+                });
+
+            //if edit clicked
             Messenger.Default.Register<OpenChildWindowAddOrEdit>(
                 this,
                 msg =>
@@ -66,11 +70,11 @@ namespace Project.Helpers
                     if (model != null)
                     {
                         model.Student = msg.Student;
-                        model.Index = msg.CurrentIndex;
+                        model.NewStudent = msg.Edit;
                     }
                     window.ShowDialog();
                 });
-
+            //data from child window
             Messenger.Default.Register<BackDataFromChildForm>(
                 this,
                 msg =>
@@ -79,18 +83,26 @@ namespace Project.Helpers
                     var model = window.DataContext as MainViewModel;
                     if (model != null)
                     {
-                        //model.CollectionOfStudent.Add(msg.Student);
-                        //if (model.CollectionOfStudent.Count == 0)
-                        //    model.CollectionOfStudent.Add(msg.Student);
-                        //else
-                        //    model.CollectionOfStudent[msg.Index] = msg.Student;
+                        if (msg.NewOrEdit)
+                            model.CollectionOfStudent.Add(msg.Student);
 
-                        if (model.CollectionOfStudent.Count == 0)
-                            model.CollectionOfStudent.Add(msg.Student);
-                        else if (msg.Index == 0)
-                            model.CollectionOfStudent.Add(msg.Student);
+                        //if edit mode
                         else
-                            model.CollectionOfStudent[msg.Index] = msg.Student;
+                        {
+                            //model.CollectionOfStudent[msg.Index] = msg.Student;
+                        }
+                    }
+                });
+            //if cancel clicked
+            Messenger.Default.Register<CancelAndRemove>(
+                this,
+                msg =>
+                {
+                    var window = new StudentView();
+                    var model = window.DataContext as StudentViewModel;
+                    if (model != null)
+                    {
+                        Trace.WriteLine("Cancel");
                     }
                 });
         }
