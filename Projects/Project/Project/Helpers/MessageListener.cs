@@ -1,6 +1,8 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
+using Project.Model;
+using Project.View;
 using Project.ViewModel;
 
 namespace Project.Helpers
@@ -54,6 +56,19 @@ namespace Project.Helpers
                 MessageBox.Show("Во время загрузки файла возникла ошибка: \n" + msg.Message, "Неудачная загрузка",
                     MessageBoxButton.OK);
             });
+
+            Messenger.Default.Register<OpenChildWindowAddOrEdit>(
+                this,
+                msg =>
+                {
+                    var window = new StudentView();
+                    var model = window.DataContext as StudentViewModel;
+                    if (model != null)
+                    {
+                        model.Student = msg.Student;
+                    }
+                    window.ShowDialog();
+                });
         }
 
         #endregion

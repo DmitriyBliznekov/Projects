@@ -158,7 +158,7 @@
                     <TextBlock Text="Удалить" />
                 </StackPanel>
             </Button>
-            <Button Command="{Binding AddCommand}">
+            <Button Command="{Binding EditCommand}">
                 <StackPanel>
                     <Image Source="/Images/Edit.png" />
                     <TextBlock Text="Изменить" />

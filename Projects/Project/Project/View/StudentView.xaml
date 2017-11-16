@@ -7,7 +7,56 @@
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="StudentView" Height="300" Width="300">
+    <Window.DataContext>
+        <Binding Path="StudentVM" Source="{StaticResource Locator}" />
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Dictionary/Resources.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Margin="10"
+                Background="BlueViolet">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя" Style="{Binding Mode=OneWay, Source={StaticResource TextBlocksStudentView}}"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Фамилия" Style="{Binding Mode=OneWay, Source={StaticResource TextBlocksStudentView}}"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Возраст" Style="{Binding Mode=OneWay, Source={StaticResource TextBlocksStudentView}}"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Пол" Style="{Binding Mode=OneWay, Source={StaticResource TextBlocksStudentView}}"></TextBlock>
+
+                <TextBox Grid.Row="0" Grid.Column="1" 
+                         Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}" 
+                         Text="{Binding Student.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></TextBox>
+                <TextBox Grid.Row="1" Grid.Column="1"
+                         Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}"></TextBox>
+                <TextBox Grid.Row="2" Grid.Column="1"
+                         Style="{Binding Mode=OneWay, Source={StaticResource TextBoxesStudentView}}"></TextBox>
+                <ComboBox Grid.Row="3" Grid.Column="1"
+                          SelectedIndex="{Binding Student.Gender, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+            </Grid>
+        </Border>
+        <StackPanel Grid.Row="1">
+            <Button></Button>
+        </StackPanel>
     </Grid>
 </Window>

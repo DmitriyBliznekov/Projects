@@ -146,43 +146,13 @@ namespace Project.ViewModel
 
         private void OnAdd()
         {
-            //if (SelectedIndex == -1)
-            //{
-            //    CollectionOfStudent.Insert(0,
-            //        new StudentModel()
-            //        {
-            //            FirstName = "Иван",
-            //            Age = "50",
-            //            Gender = "0",
-            //            LastName = "Иванов"
-            //        });
-            //    SelectedIndex = 0;
-            //}
-            //else
-            //{
-            //    CollectionOfStudent.Insert(SelectedIndex,
-            //        new StudentModel()
-            //        {
-            //            FirstName = "Иван",
-            //            Age = "50",
-            //            Gender = "0",
-            //            LastName = "Иванов"
-            //        });
-            //    SelectedIndex -= 1;
-            //}
+            //CollectionOfStudent.Add(newStudent);
+            //StudentModel = newStudent;
 
-            var newStudent = new StudentModel()
-            {
-                FirstName = "Иван",
-                Age = "50",
-                Gender = "0",
-                LastName = "Иванов"
-            };
+            //ClearCommand.RaiseCanExecuteChanged(); // Activate Clear button
 
-            CollectionOfStudent.Add(newStudent);
-            StudentModel = newStudent;
-
-            ClearCommand.RaiseCanExecuteChanged(); // Activate Clear button
+            //MessengerInstance.Send(new StudentModel() {FirstName = "Ivan", Age = "22", Gender = "1", LastName = "Loh"});
+            MessengerInstance.Send(new OpenChildWindowAddOrEdit(new StudentModel() {FirstName = "Ivan", Age = "22", Gender = "1", LastName = "Loh"}));
         }
 
         private void OnDelete(object students)
